@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta title="Quanto manca? Calcola quanti giorni mancano ad una data">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+
+    <style>
+        .w3-sofia {
+            font-family: Sofia, cursive;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: start;
+            justify-content: center;
+            background: linear-gradient(to bottom, #FFD700, #FFA500);
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+        }
+
+        a {
+            text-decoration: underline;
+        }
+
+        main {
+            width: 480px;
+        }
+
+        #data {
+            padding: 5px;
+        }
+
+        .shadow {
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <!--<section>
+            <div class="w3-margin"><a href="#">Quanti giorni mancano a Natale?</a></div>
+        </section>-->
+        <section id="data_seleziona" class="w3-margin">
+            <div class="w3-container w3-padding-32 w3-round-xlarge w3-white shadow">
+                <img src="/qmanca/icons8-hourglass.gif" alt="quanto manca">
+                <h1 class="w3-sofia">Quanto manca?</h1>
+                <p class="">Seleziona un data per calcolare quato tempo manca:</p>
+
+                <input type="date" id="data" class="w3-round-medium w3-border-1 w3-border-black ">
+                <button class="w3-button w3-round-medium w3-black" onclick="calcolaDifferenza()">Calcola</button>
+
+            </div>
+        </section>
+        <section id="data_risultato" class="w3-margin">
+            <div class="w3-container w3-padding-16 w3-round-xlarge w3-white w3-hide shadow">
+                <h1 class="w3-sofia" id="risultato"></h1>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function calcolaDifferenza() {
+            var dataInserita = new Date(document.getElementById('data').value);
+            console.log(dataInserita);
+
+            // Controllo se la data è valida (non NaN)
+            if (isNaN(dataInserita)) {
+                document.getElementById('risultato').textContent = 'Inserisci una data valida.';
+                return;
+            }
+
+            var oggi = Date.now();
+            var differenza = Math.ceil((dataInserita - oggi) / (1000 * 60 * 60 * 24));
+
+            console.log(oggi);
+            console.log(differenza);
+
+            if (differenza === 0) {
+                document.getElementById('risultato').textContent = 'È oggi!';
+            } else if (differenza === -1) {
+                var ore = Math.abs(dataInserita - oggi) / (1000 * 60 * 60);
+                document.getElementById('risultato').textContent = 'È ieri!';
+            } else if (differenza < 0) {
+                document.getElementById('risultato').textContent = 'Sono passati ' + Math.abs(differenza) + ' giorni';
+            } else if (differenza === 1) {
+                var ore = Math.abs(dataInserita - oggi) / (1000 * 60 * 60);
+                document.getElementById('risultato').textContent = 'È domani!';
+            } else {
+                document.getElementById('risultato').textContent = 'Mancano ' + differenza + ' giorni';
+            }
+
+            var mostraRisultato = document.querySelector('.w3-hide');
+            mostraRisultato.classList.remove('w3-hide');
+            mostraRisultato.classList.add('w3-show');
+        }
+    </script>
+
+</body>
+
+</html>

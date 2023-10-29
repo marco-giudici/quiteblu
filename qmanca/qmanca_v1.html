@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quanto manca? Calcola quanti giorni mancano ad una data</title>
+</head>
+<body>
+
+    <h1>Quanto manca?</h1>
+    <p>Calcola quanti giorni mancano ad una data.</p>
+
+    <form>
+        <label for="data">Inserisci una data:</label>
+        <input type="date" id="data" name="data" oninput="calcolaDifferenza()">
+    </form>
+
+    <p id="risultato"></p>
+
+    <script>
+        function calcolaDifferenza() {
+            var dataInserita = new Date(document.getElementById('data').value);
+            console.log(dataInserita);
+
+            // Controllo se la data è valida (non NaN)
+            if (isNaN(dataInserita)) {
+                document.getElementById('risultato').textContent = 'Inserisci una data valida.';
+                return;
+            }
+
+            var oggi = Date.now();
+            var differenza = Math.ceil((dataInserita - oggi) / (1000 * 60 * 60 * 24));
+
+            console.log(oggi);
+            console.log(differenza);
+
+            if (differenza === 0) {
+                document.getElementById('risultato').textContent = 'È oggi!';
+            } else if (differenza === -1) {
+                var ore = Math.abs(dataInserita - oggi) / (1000 * 60 * 60);
+                document.getElementById('risultato').textContent = 'È ieri!';
+            }else if (differenza < 0) {
+                document.getElementById('risultato').textContent = 'Sono passati ' + Math.abs(differenza) + ' giorni.';
+            } else if (differenza === 1) {
+                var ore = Math.abs(dataInserita - oggi) / (1000 * 60 * 60);
+                document.getElementById('risultato').textContent = 'È domani!';
+            }else {
+                document.getElementById('risultato').textContent = 'Mancano ' + differenza + ' giorni.';
+            }
+        }
+    </script>
+
+</body>
+</html>
